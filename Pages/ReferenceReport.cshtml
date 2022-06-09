@@ -1,0 +1,56 @@
+﻿@page
+@using RazorPagesReferenceReport.Models
+@model RazorPagesReferenceReport.Pages.ReferenceReportModel
+@{
+    ViewData["Title"] = "Reference Report";
+}
+
+<h1>Reference Reports</h1>
+<form method="post" class="card p-3">
+    <div class="row">
+        <div asp-validation-summary="All"></div>
+    </div>
+    <div class="form-group mb-0 align-middle">
+        <label asp-for="NewReferenceReport.Reporter">Reporter</label>
+        <input type="text" asp-for="NewReferenceReport.Reporter" class="mr-5" />
+        <label asp-for="NewReferenceReport.ReportStatus">Report Status</label>
+        <select asp-for="NewReferenceReport.ReportStatus" asp-items="Html.GetEnumSelectList<Status>()" class="mr-5"></select>
+        <label asp-for="NewReferenceReport.BookUsage">Book Usage</label>
+        <input type="text" asp-for="NewReferenceReport.BookUsage" class="mr-5" />
+        <label asp-for="NewReferenceReport.IsControlled">Is Controlled</label>
+        <input type="checkbox" asp-for="NewReferenceReport.IsControlled" class="mr-5">
+        <button class="btn btn-primary">Add</button>
+    </div>
+</form>
+
+    <table class="table mt-5">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Reporter</th>
+            <th scope="col">ReportStatus</th>
+            <th scope="col">BookUsage</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    @foreach (var referenceReport in Model.referenceReports)
+    {
+        <tr>
+            <td>@referenceReport.Id</td>
+            <td>@referenceReport.Reporter</td>
+            <td>@referenceReport.ReportStatus</td>
+            <td>@referenceReport.BookUsage</td>
+            <td>
+                <form method="post" asp-page-handler="Delete" asp-route-id="@referenceReport.Id">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </table>
+
+   
+   
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
